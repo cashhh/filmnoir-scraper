@@ -21,7 +21,7 @@ public class Scraper {
     private ShowtimeRepository showtimeRepository;
 
     public Scraper(MovieRepository movieRepository, ShowtimeRepository showtimeRepository) throws IOException, ParseException {
-        input = readFile("C:\\Users\\nick\\Downloads\\FilmNoirTVListings.html");
+        input = readFile("");
         doc = Jsoup.parse(input, "UTF-8");
 
         this.movieRepository = movieRepository;
@@ -34,56 +34,6 @@ public class Scraper {
 
         fillDatabase(tvBoxShow, tvBoxNoirAlley, tvBoxRegular);
     }
-
-    /*public static void main(String[] args) throws IOException, ParseException {
-        File input = new File("C:\\Users\\nick\\Downloads\\FilmNoirTVListings.html");
-        Document doc = Jsoup.parse(input, "UTF-8");
-
-        Elements movieList = doc.select("div#tcmcol2");
-        Elements tvBoxShow = movieList.select("div.tvboxshw");
-        Elements tvBoxNoirAlley = movieList.select("div.tvbox_noiralley");
-        Elements tvBoxRegular = movieList.select("div#tcmcol2 > p:not(.tvboxshw), div#tcmcol2 > p:not(.tvbox_noiralley)");
-
-        extractTvBoxShowData(tvBoxShow);
-
-        Elements a = tvBoxShow.get(0).select("p.date");
-        System.out.println(a.get(0).text());
-        for (int i = 0; i < a.size(); i+=a.size()) {
-
-            String[] timesArray = a.get(0).text().split(", ");
-            for (String s : timesArray) {
-                System.out.println(s);
-            }
-        }
-
-
-
-        String[] noirAlleyShowtime = tvBoxNoirAlley.get(0).select("p.date").text().split(" & ");
-        for (String s : noirAlleyShowtime) {
-            s = s.substring(s.indexOf(",")+2);
-
-            String[] dateArray = s.split(" ");
-            String month = dateArray[0];
-            String day = dateArray[1].substring(0, dateArray[1].indexOf(","));
-            String hourMinute = dateArray[2];
-            String amPm = dateArray[3];
-
-            System.out.println(month);
-            System.out.println(day);
-            System.out.println(hourMinute);
-            System.out.println(amPm);
-        }
-
-        String showtime = tvBoxRegular.get(0).ownText();
-        showtime = showtime.substring(showtime.indexOf(",")+2);
-
-        String[] dateArray = showtime.split(" ");
-        String month = dateArray[0];
-        String day = dateArray[1].substring(0, dateArray[1].indexOf(","));
-        String hourMinute = dateArray[2];
-        String amPm = dateArray[3];
-
-    }*/
 
     private File readFile(String filepath) {
         return new File(filepath);
